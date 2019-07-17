@@ -28,7 +28,7 @@ public class CrownCaseRepositoryTest {
     List<CrownCase> crownCases = new ArrayList<CrownCase>() {{
       add(new CrownCase(System.currentTimeMillis(), "case1"));
       add(new CrownCase(System.currentTimeMillis(), "case2"));
-      add(new CrownCase(System.currentTimeMillis(), "case3"));
+      add(new CrownCase(System.currentTimeMillis(), "case2"));
     }};
        crownCaseRepository.saveAll(crownCases);
   }
@@ -56,5 +56,10 @@ public class CrownCaseRepositoryTest {
     System.out.println("0:"+result.get(0).getCaseTime());
     System.out.println("1:"+result.get(1).getCaseTime());
     Assert.assertEquals(true,result.get(0).getCaseTime()>=result.get(1).getCaseTime());
+  }
+  @Test
+  public void should_return_CrownCases_when_call_find_all_by_caseName(){
+    List<CrownCase> result = crownCaseRepository.findAllByCaseName("case2");
+    Assert.assertEquals(2,result.size());
   }
 }
