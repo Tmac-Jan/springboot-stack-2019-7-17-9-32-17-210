@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class CrownCase {
@@ -26,6 +27,11 @@ public class CrownCase {
   @OneToOne(cascade= CascadeType.ALL, fetch= FetchType.LAZY)
   @JoinColumn(name="crownCaseDetailId",referencedColumnName = "id")
   private CrownCaseDetail crownCaseDetail;
+
+  @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+  @JoinColumn(name="procuratorateId",referencedColumnName = "id")
+  @NotNull
+  private Procuratorate procuratorate;
   public CrownCase() {
   }
 
@@ -39,6 +45,14 @@ public class CrownCase {
   public CrownCase(Long caseTime, String caseName) {
     this.caseTime = caseTime;
     this.caseName = caseName;
+  }
+
+  public CrownCase(Long caseTime, String caseName,
+      CrownCaseDetail crownCaseDetail, Procuratorate procuratorate) {
+    this.caseTime = caseTime;
+    this.caseName = caseName;
+    this.crownCaseDetail = crownCaseDetail;
+    this.procuratorate = procuratorate;
   }
 
   public Integer getId() {
@@ -71,6 +85,14 @@ public class CrownCase {
 
   public void setCrownCaseDetail(CrownCaseDetail crownCaseDetail) {
     this.crownCaseDetail = crownCaseDetail;
+  }
+
+  public Procuratorate getProcuratorate() {
+    return procuratorate;
+  }
+
+  public void setProcuratorate(Procuratorate procuratorate) {
+    this.procuratorate = procuratorate;
   }
 }
 

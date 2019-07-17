@@ -3,6 +3,7 @@ package com.tw.apistackbase.repository;
 
 import com.tw.apistackbase.entity.CrownCase;
 import com.tw.apistackbase.entity.CrownCaseDetail;
+import com.tw.apistackbase.entity.Procuratorate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +28,9 @@ public class CrownCaseRepositoryTest {
   @Before
   public void setUp() {
     List<CrownCase> crownCases = new ArrayList<CrownCase>() {{
-      add(new CrownCase(new Long(1001), "case1",null));
-      add(new CrownCase(new Long(1002), "case2",null));
-      add(new CrownCase(new Long(1003), "case2",null));
+      add(new CrownCase(new Long(1001), "case1",null,new Procuratorate("procuratorate1")));
+      add(new CrownCase(new Long(1002), "case2",null,new Procuratorate("procuratorate2")));
+      add(new CrownCase(new Long(1003), "case2",null,new Procuratorate("procuratorate3")));
     }};
        crownCaseRepository.saveAll(crownCases);
   }
@@ -78,6 +79,14 @@ public class CrownCaseRepositoryTest {
     Assert.assertEquals(true,crownCaseDetail.getObjectiveCondition()
         .equals(result.getCrownCaseDetail().getObjectiveCondition()));
   }
-
+  @Test
+  public void should_return_CrownCase_when_call_save_CrownCase_with_Procuratorate_not_null(){
+    CrownCase crownCase = new CrownCase((long) 10000001,"testCase");
+    Procuratorate procuratorate = new Procuratorate("test");
+    crownCase.setProcuratorate(procuratorate);
+    CrownCase result= crownCaseRepository.save(crownCase);
+    Assert.assertEquals(true,procuratorate.getProcuratorateName()
+        .equals(result.getProcuratorate().getProcuratorateName()));
+  }
 
 }
