@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.tw.apistackbase.entity.CrownCase;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +29,24 @@ public class CrownCaseRepositoryTest {
       add(new CrownCase(System.currentTimeMillis(), "case1"));
       add(new CrownCase(System.currentTimeMillis(), "case2"));
     }};
-
+       crownCaseRepository.saveAll(crownCases);
   }
 
   @Test
-  public void should_return_CrownCase_when_call_save(){
+  public void should_return_CrownCases_when_call_save_with_not_null(){
     CrownCase crownCase = new CrownCase(System.currentTimeMillis(),"case3");
     CrownCase result = crownCaseRepository.save(crownCase);
+    Assert.assertNotEquals(null,result);
+  }
+
+  @Test
+  public void should_return_CrownCase_when_call_find_by_Id(){
+    CrownCase crownCase = crownCaseRepository
+        .findAll()
+        .stream()
+        .findFirst()
+        .orElse(null);
+    Optional<CrownCase> result = crownCaseRepository.findById(crownCase.getId());
     Assert.assertNotEquals(null,result);
   }
 }
