@@ -68,12 +68,7 @@ public class CrownCaseRepositoryTest {
   @Test
   @Transactional
   public void should_return_1_when_call_delete_CrownCase_by_id(){
-    List<CrownCase> result = crownCaseRepository.findAll();
-    result.stream().forEach(e->System.out.println(e.getId()));
-    System.out.println("size-before-del:"+result.size());
-    crownCaseRepository.deleteById(result.get(0).getId());
-    crownCaseRepository.flush();
-    System.out.println("size-after-del:"+result.size());
-    Assert.assertEquals(2,result.size());
+    crownCaseRepository.deleteById(1);
+    Assert.assertEquals(2,crownCaseRepository.findAll().size());
   }
 }
