@@ -6,6 +6,7 @@ import com.tw.apistackbase.entity.CrownCase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -26,9 +28,9 @@ public class CrownCaseRepositoryTest {
   @Before
   public void setUp() {
     List<CrownCase> crownCases = new ArrayList<CrownCase>() {{
-      add(new CrownCase(System.currentTimeMillis(), "case1"));
-      add(new CrownCase(System.currentTimeMillis(), "case2"));
-      add(new CrownCase(System.currentTimeMillis(), "case2"));
+      add(new CrownCase(new Long(1001), "case1"));
+      add(new CrownCase(new Long(1002), "case2"));
+      add(new CrownCase(new Long(1003), "case2"));
     }};
        crownCaseRepository.saveAll(crownCases);
   }
@@ -48,9 +50,10 @@ public class CrownCaseRepositoryTest {
         .findFirst()
         .orElse(null);
     Optional<CrownCase> result = crownCaseRepository.findById(crownCase.getId());
-    Assert.assertNotEquals(null,result);
+    Assert.assertNotEquals(null,result.get());
   }
   @Test
+  @Transactional
   public void should_return_CrownCase_when_call_find_all_order_by_caseTime_desc(){
     List<CrownCase> result = crownCaseRepository.findAllOrderByCaseTime();
     System.out.println("0:"+result.get(0).getCaseTime());
@@ -60,6 +63,17 @@ public class CrownCaseRepositoryTest {
   @Test
   public void should_return_CrownCases_when_call_find_all_by_caseName(){
     List<CrownCase> result = crownCaseRepository.findAllByCaseName("case2");
+    Assert.assertEquals(2,result.size());
+  }
+  @Test
+  @Transactional
+  public void should_return_1_when_call_delete_CrownCase_by_id(){
+    List<CrownCase> result = crownCaseRepository.findAll();
+    result.stream().forEach(e->System.out.println(e.getId()));
+    System.out.println("size-before-del:"+result.size());
+    crownCaseRepository.deleteById(result.get(0).getId());
+    crownCaseRepository.flush();
+    System.out.println("size-after-del:"+result.size());
     Assert.assertEquals(2,result.size());
   }
 }
