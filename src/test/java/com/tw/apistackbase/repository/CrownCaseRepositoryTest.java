@@ -28,13 +28,14 @@ public class CrownCaseRepositoryTest {
     List<CrownCase> crownCases = new ArrayList<CrownCase>() {{
       add(new CrownCase(System.currentTimeMillis(), "case1"));
       add(new CrownCase(System.currentTimeMillis(), "case2"));
+      add(new CrownCase(System.currentTimeMillis(), "case3"));
     }};
        crownCaseRepository.saveAll(crownCases);
   }
 
   @Test
   public void should_return_CrownCases_when_call_save_with_not_null(){
-    CrownCase crownCase = new CrownCase(System.currentTimeMillis(),"case3");
+    CrownCase crownCase = new CrownCase(System.currentTimeMillis(),"case4");
     CrownCase result = crownCaseRepository.save(crownCase);
     Assert.assertNotEquals(null,result);
   }
@@ -48,5 +49,12 @@ public class CrownCaseRepositoryTest {
         .orElse(null);
     Optional<CrownCase> result = crownCaseRepository.findById(crownCase.getId());
     Assert.assertNotEquals(null,result);
+  }
+  @Test
+  public void should_return_CrownCase_when_call_find_all_order_by_caseTime_desc(){
+    List<CrownCase> result = crownCaseRepository.findAllOrderByCaseTime();
+    System.out.println("0:"+result.get(0).getCaseTime());
+    System.out.println("1:"+result.get(1).getCaseTime());
+    Assert.assertEquals(true,result.get(0).getCaseTime()>=result.get(1).getCaseTime());
   }
 }
