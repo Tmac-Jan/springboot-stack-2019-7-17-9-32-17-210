@@ -6,6 +6,7 @@ import com.tw.apistackbase.entity.CrownCase;
 import com.tw.apistackbase.entity.Procuratorate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,5 +42,11 @@ public class ProcuratorateRepositoryTest {
     Procuratorate procuratorate = new Procuratorate("Procuratorate4");
     Procuratorate procuratorateResult = procuratorateRepository.save(procuratorate);
     Assert.assertNotEquals(null,procuratorateResult);
+  }
+
+  @Test
+  public void should_return_Procuratorate_when_call_find_by_Id(){
+    Optional<Procuratorate> procuratorateResult = procuratorateRepository.findById(1);
+    Assert.assertNotEquals(null,procuratorateResult.get());
   }
 }
