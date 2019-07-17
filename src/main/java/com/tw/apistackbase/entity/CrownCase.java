@@ -4,6 +4,7 @@ package com.tw.apistackbase.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class CrownCase {
@@ -11,8 +12,10 @@ public class CrownCase {
   @GeneratedValue
   private Integer id;
 
+  @NotNull
   private Long caseTime;
 
+  @NotNull
   private String caseName;
 
   public CrownCase() {
