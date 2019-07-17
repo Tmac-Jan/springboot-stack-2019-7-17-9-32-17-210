@@ -36,6 +36,7 @@ public class CrownCaseRepositoryTest {
   }
 
   @Test
+  @Transactional
   public void should_return_CrownCases_when_call_save_with_not_null(){
     CrownCase crownCase = new CrownCase(System.currentTimeMillis(),"case4");
     CrownCase result = crownCaseRepository.save(crownCase);
@@ -53,7 +54,6 @@ public class CrownCaseRepositoryTest {
     Assert.assertNotEquals(null,result.get());
   }
   @Test
-  @Transactional
   public void should_return_CrownCase_when_call_find_all_order_by_caseTime_desc(){
     List<CrownCase> result = crownCaseRepository.findAllOrderByCaseTime();
     System.out.println("0:"+result.get(0).getCaseTime());
