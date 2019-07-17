@@ -1,12 +1,11 @@
 package com.tw.apistackbase.repository;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.tw.apistackbase.entity.CrownCase;
+import com.tw.apistackbase.entity.CrownCaseDetail;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,9 +27,9 @@ public class CrownCaseRepositoryTest {
   @Before
   public void setUp() {
     List<CrownCase> crownCases = new ArrayList<CrownCase>() {{
-      add(new CrownCase(new Long(1001), "case1"));
-      add(new CrownCase(new Long(1002), "case2"));
-      add(new CrownCase(new Long(1003), "case2"));
+      add(new CrownCase(new Long(1001), "case1",null));
+      add(new CrownCase(new Long(1002), "case2",null));
+      add(new CrownCase(new Long(1003), "case2",null));
     }};
        crownCaseRepository.saveAll(crownCases);
   }
@@ -56,8 +55,6 @@ public class CrownCaseRepositoryTest {
   @Test
   public void should_return_CrownCase_when_call_find_all_order_by_caseTime_desc(){
     List<CrownCase> result = crownCaseRepository.findAllOrderByCaseTime();
-    System.out.println("0:"+result.get(0).getCaseTime());
-    System.out.println("1:"+result.get(1).getCaseTime());
     Assert.assertEquals(true,result.get(0).getCaseTime()>=result.get(1).getCaseTime());
   }
   @Test
@@ -70,5 +67,15 @@ public class CrownCaseRepositoryTest {
   public void should_return_1_when_call_delete_CrownCase_by_id(){
     crownCaseRepository.deleteById(1);
     Assert.assertEquals(2,crownCaseRepository.findAll().size());
+  }
+
+  @Test
+  public void should_return_CrownCases_when_call_save_CrownCase_with_CrownCaseDetail(){
+    CrownCase crownCase = new CrownCase((long) 10000001,"testCase");
+    CrownCaseDetail crownCaseDetail = new CrownCaseDetail("test1","test2");
+    crownCase.setCrownCaseDetail(crownCaseDetail);
+    CrownCase result= crownCaseRepository.save(crownCase);
+    Assert.assertEquals(true,crownCaseDetail.getObjectiveCondition()
+        .equals(result.getCrownCaseDetail().getObjectiveCondition()));
   }
 }
