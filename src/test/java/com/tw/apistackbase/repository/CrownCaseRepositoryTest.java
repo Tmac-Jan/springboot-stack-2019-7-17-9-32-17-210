@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -42,7 +43,13 @@ public class CrownCaseRepositoryTest {
     CrownCase result = crownCaseRepository.save(crownCase);
     Assert.assertNotEquals(null,result);
   }
-
+  @Test
+  @Transactional
+  public void should_return_CrownCases_when_call_save_with_null_caseTime_and_not_null_caseName(){
+    CrownCase crownCase = new CrownCase(null,"case4");
+    Assertions.assertThrows(javax.validation.ConstraintViolationException.class, () ->
+        crownCaseRepository.saveAndFlush(crownCase));
+  }
   @Test
   public void should_return_CrownCase_when_call_find_by_Id(){
     CrownCase crownCase = crownCaseRepository

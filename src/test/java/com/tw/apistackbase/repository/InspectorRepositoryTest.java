@@ -53,7 +53,7 @@ public class InspectorRepositoryTest {
 
   @Test
   @Transactional
-  public void should_return_Inspectors_when_call_find_by_id() {
+  public void should_return_Inspectors_when_call_find_by_Id() {
     Optional<Inspector> inspector =  inspectorRepository.findById(1);
     Assert.assertNotEquals(null,inspector.get());
   }
