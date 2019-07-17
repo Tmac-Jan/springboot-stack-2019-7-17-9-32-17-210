@@ -3,6 +3,7 @@ package com.tw.apistackbase.repository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.tw.apistackbase.entity.CrownCase;
+import com.tw.apistackbase.entity.Inspector;
 import com.tw.apistackbase.entity.Procuratorate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,5 +49,19 @@ public class ProcuratorateRepositoryTest {
   public void should_return_Procuratorate_when_call_find_by_Id(){
     Optional<Procuratorate> procuratorateResult = procuratorateRepository.findById(1);
     Assert.assertNotEquals(null,procuratorateResult.get());
+  }
+
+  @Test
+  @Transactional
+  public void should_return_Procuratorate_when_call_save_with_not_null_Inspector(){
+    Procuratorate procuratorate = new Procuratorate("Procuratorate4");
+    List<Inspector> inspectors = new ArrayList<Inspector>(){{
+      add(new Inspector("test1"));
+      add(new Inspector("test2"));
+      add(new Inspector("test3"));
+    }};
+    procuratorate.setInspectors(inspectors);
+    Procuratorate procuratorateResult = procuratorateRepository.save(procuratorate);
+    Assert.assertEquals(3,procuratorateResult.getInspectors().size());
   }
 }
