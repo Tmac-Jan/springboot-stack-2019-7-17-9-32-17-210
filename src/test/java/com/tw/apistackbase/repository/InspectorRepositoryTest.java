@@ -3,6 +3,7 @@ package com.tw.apistackbase.repository;
 import com.tw.apistackbase.entity.Inspector;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,5 +49,12 @@ public class InspectorRepositoryTest {
     Inspector inspector = new Inspector(null);
     Assertions.assertThrows(javax.validation.ConstraintViolationException.class, () ->
         inspectorRepository.saveAndFlush(inspector));
+  }
+
+  @Test
+  @Transactional
+  public void should_return_Inspectors_when_call_find_by_id() {
+    Optional<Inspector> inspector =  inspectorRepository.findById(1);
+    Assert.assertNotEquals(null,inspector.get());
   }
 }
