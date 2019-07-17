@@ -50,6 +50,14 @@ public class CrownCaseRepositoryTest {
     Assertions.assertThrows(javax.validation.ConstraintViolationException.class, () ->
         crownCaseRepository.saveAndFlush(crownCase));
   }
+
+  @Test
+  @Transactional
+  public void should_return_CrownCases_when_call_save_with_not_null_caseTime_and_null_caseName(){
+    CrownCase crownCase = new CrownCase((long) 1000557,null);
+    Assertions.assertThrows(javax.validation.ConstraintViolationException.class, () ->
+        crownCaseRepository.saveAndFlush(crownCase));
+  }
   @Test
   public void should_return_CrownCase_when_call_find_by_Id(){
     CrownCase crownCase = crownCaseRepository
