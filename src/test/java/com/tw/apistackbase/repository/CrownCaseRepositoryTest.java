@@ -78,4 +78,6 @@ public class CrownCaseRepositoryTest {
     Assert.assertEquals(true,crownCaseDetail.getObjectiveCondition()
         .equals(result.getCrownCaseDetail().getObjectiveCondition()));
   }
+
+
 }
