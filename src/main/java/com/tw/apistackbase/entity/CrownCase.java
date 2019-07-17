@@ -1,21 +1,24 @@
 package com.tw.apistackbase.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class CrownCase {
+
   @Id
   @GeneratedValue
   private Integer id;
 
-  @NotNull
+  @Column(name="case_time",nullable = false)
   private Long caseTime;
 
-  @NotNull
+  @Column(name="case_name",nullable = false)
   private String caseName;
 
   public CrownCase() {
